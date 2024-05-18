@@ -4,6 +4,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import time
 from flask import Flask, request, url_for, session, redirect, render_template
+import csv
 
 
 app = Flask(__name__)
@@ -33,8 +34,8 @@ def redirectPage():
 
 @app.route('/youtube_scrape')
 def youtube_scrape():
-    '''
-    link = "https://music.youtube.com/playlist?list=PL5C2tAj5shVP1N_Fci6gn86Oh_Nksu2MO"
+
+    link = "https://music.youtube.com/playlist?list=PL5C2tAj5shVO0V5suzCsd885u7CVo94K_"
 
     vlinks = Playlist(link)
 
@@ -43,7 +44,7 @@ def youtube_scrape():
 
     filename = 'songs.csv'
     f = open(filename, 'a')
-    headers = 'Song,Artist\n'
+    headers = 'Artist,Song\n'
     f.write(headers)
 
     for song in vlinks:
@@ -59,7 +60,7 @@ def youtube_scrape():
         print(name +" "+ title)
         print("\n")
     f.close()
-    '''
+    
     
     try:
         token_info = get_token()
@@ -68,14 +69,36 @@ def youtube_scrape():
         return redirect('/')
     
     sp = spotipy.Spotify(auth=token_info['access_token'])
-
-    user_id = sp.current_user()['id']
+    
+    
     song_uris = []
+    user_id = sp.current_user()['id']
+    
+    csv_file = 'songs.csv'
+    with open(csv_file, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            song_name = row['Song']
+            artist_name = row['Artist']
 
-    yt_playlist = sp.user_playlist_create(user_id, 'Youtube Playlist', True)
+            # Search for song
+            results = sp.search(q=song_name +' '+ artist_name, type='track')
+            
+            # Get song URI if found
+            if results['tracks']['items']:
+                song_uri = results['tracks']['items'][0]['uri']
+                song_uris.append(song_uri)
+                print(f"Song: {song_name} by {artist_name}, URI: {song_uri}")
+            else:
+                print(f"Song: {song_name} by {artist_name} not found on Spotify")
+    file.close()
+
+    name = "Youtube Playlist"
+    yt_playlist = sp.user_playlist_create(user_id, name, True)
     yt_playlist_id = yt_playlist['id']
     sp.user_playlist_add_tracks(user_id, yt_playlist_id, song_uris)
 
+    return "done"
 def get_token():
     token_info = session.get(TOKEN_INFO, None)
 
@@ -97,4 +120,4 @@ def create_spotify_oauth():
             redirect_uri=url_for('redirectPage', _external=True),
             scope = "user-library-read playlist-modify-public playlist-modify-private")
 
-app.run(debug=True)
+app.run()
