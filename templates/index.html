@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content ="IE=edge">
+    <metae name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> YouTube->Spotify </title>
+    <script type="text/javascript" src = "{{ url_for('static', filename='script/script.js')}}"></script>
+    <link rel="stylesheet" href = "{{ url_for('static', filename='css/style.css')}}">
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/96e88eed38.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+</head>
+
+<body>
+<section>
+    <div class = "title">
+        <h1> Youtube -> Spotify  </h1>
+    </div>
+    
+    <form action = '/youtube_scrape' class="form__group field" method="post">
+        <input type="input" class="form__field" placeholder="Link" name="link" id="link" required />
+        <label for="link" class="form__label">Link</label>
+    </form>
+
+    <div class="loader-container">
+        <div class="animation">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            
+        </div>
+    </div>
+</section>
+
+<script>
+
+
+
+
+
+</script>
+</body>
