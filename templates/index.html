@@ -33,25 +33,27 @@
         <div class = "bar"></div>
         <div class = "bar"></div>
     </div>
-    <div class = "title">
-        <h1> Youtube -> Spotify  </h1>
-    </div>
-    <div class = "info">
-        <p> Enter your playlist like below and see it automaitcally appear in your Spotify account!<p>
-    </div>
-    <form action = '/youtube_scrape' class="form__group field" method="post">
-        <input type="input" class="form__field" placeholder="Link" name="link" id="link" required />
-        <label for="link" class="form__label">Link</label>
-    </form>
+    <div class = "content">
+        <div class = "title">
+            <h1> Youtube -> Spotify  </h1>
+        </div>
+        <div class = "info">
+            <p> Enter your playlist like below and see it automaitcally appear in your Spotify account!<p>
+        </div>
+        <form action = '/youtube_scrape' class="form__group field" method="post">
+            <input type="input" class="form__field" placeholder="Link" name="link" id="link" required />
+            <label for="link" class="form__label">Link</label>
+        </form>
 
-    <div class="loader-container">
-        <div class="animation">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            
+        <div class="loader-container">
+            <div class="animation">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                
+            </div>
         </div>
     </div>
 </section>
