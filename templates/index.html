@@ -7,7 +7,10 @@
 
     <title> YouTube->Spotify </title>
     <script type="text/javascript" src = "{{ url_for('static', filename='script/script.js')}}"></script>
-    <link rel="stylesheet" href = "{{ url_for('static', filename='css/style.css')}}">
+    <!--
+    <link rel="stylesheet" href = "{{ url_for('static', filename='css/style.css')}}"> 
+    -->
+    <link rel="stylesheet" href = "other.css"> 
     <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://kit.fontawesome.com/96e88eed38.js" crossorigin="anonymous"></script>
@@ -17,10 +20,25 @@
 
 <body>
 <section>
+    <div class = "music">
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+        <div class = "bar"></div>
+    </div>
     <div class = "title">
         <h1> Youtube -> Spotify  </h1>
     </div>
-    
+    <div class = "info">
+        <p> Enter your playlist like below and see it automaitcally appear in your Spotify account!<p>
+    </div>
     <form action = '/youtube_scrape' class="form__group field" method="post">
         <input type="input" class="form__field" placeholder="Link" name="link" id="link" required />
         <label for="link" class="form__label">Link</label>
@@ -39,10 +57,54 @@
 </section>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.form__group');
+    const loaderContainer = document.querySelector('.loader-container');
+    const inputField = document.getElementById('link');
+    let isLoading = false;
 
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
 
+        if (!isLoading) {
+            const input = inputField.value.trim();
+            if (input !== '') {
+                isLoading = true; // Set loading state to true
+                loaderContainer.classList.add('show-animation'); // Show loader animation
 
+                // Set the content type to JSON
+                const headers = new Headers();
+                headers.append('Content-Type', 'application/json');
 
+                // Prepare the request options
+                const requestOptions = {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ link: input }) // Convert input to JSON format
+                };
+
+                // Make the fetch request
+                fetch('/youtube_scrape', requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle response data if needed
+                        console.log(data);
+                        // After loading is done, reset the loading state and hide the loader
+                        isLoading = false;
+                        loaderContainer.classList.remove('show-animation');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Handle errors if needed
+                        isLoading = false; // Reset loading state even if there's an error
+                        loaderContainer.classList.remove('show-animation');
+                    });
+            } else {
+                alert('Please provide a valid link');
+            }
+        }
+    });
+});
 
 </script>
 </body>

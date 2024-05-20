@@ -98,7 +98,7 @@ body {
 /* LOADER */
 
 .loader-container {
-    display: flex;
+    display: none;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     height: 20vh; /* Full viewport height */
