@@ -131,7 +131,7 @@ transition: border-color 0.2s;
   justify-content: center; 
   align-items: center; 
   height: 20vh; 
-  background-color: #222222;
+  background-color: transparent;
 }
 
 .loader-container.show-animation {
@@ -165,7 +165,7 @@ transition: border-color 0.2s;
   }
   75%{
     height: 50px;
-    background: #5c0202;
+    background: #d1b6b6;
   }
 }
 .animation span:nth-child(1){
