@@ -12,7 +12,7 @@ TOKEN_INFO = "token_info"
 # Spotify API credentials
 CLIENT_ID = 'e61032d8b5654366b5b33d91eede43ad'
 CLIENT_SECRET = 'e755df87f9bf440d811c2f3ea305d95e'
-REDIRECT_URI = 'http://127.0.0.1:5000/redirect' 
+REDIRECT_URI = 'http://achandi.pythonanywhere.com/redirect' 
 
 #Initial OAUTH route
 @app.route('/')
